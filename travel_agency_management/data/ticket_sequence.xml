@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Define the sequence for travel tickets -->
+        <record id="seq_travel_ticket" model="ir.sequence">
+            <field name="name">Travel Ticket Sequence</field>
+            <field name="code">travel.ticket</field>
+            <field name="prefix">TKT</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>
+

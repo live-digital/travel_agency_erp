@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action -->
+    <record id="action_travel_customer" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">travel.customer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_customer_form" model="ir.ui.view">
+        <field name="name">customer.form</field>
+        <field name="model">travel.customer</field>
+        <field name="arch" type="xml">
+            <form string="Customer">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="gender"/>
+                            <field name="phone"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="age"/>
+
+                        </group>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_customer_tree" model="ir.ui.view">
+        <field name="name">customer.tree</field>
+        <field name="model">travel.customer</field>
+        <field name="arch" type="xml">
+            <tree string="Customer">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="gender"/>
+                 <field name="age"/>
+                <field name="email"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_travel_trip" model="ir.sequence">
+        <field name="name">Travel Trip Sequence</field>
+        <field name="code">travel.trip</field>
+        <field name="prefix">TRIP/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

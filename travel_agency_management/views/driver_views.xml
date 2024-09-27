@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action to Open Driver List View -->
+    <record id="action_travel_driver" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">travel.driver</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_driver_tree"/>
+    </record>
+
+    <!-- List View for Drivers -->
+    <record id="view_driver_tree" model="ir.ui.view">
+        <field name="name">travel.driver.tree</field>
+        <field name="model">travel.driver</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="phone_no"/>
+                <field name="aadhar_no"/>
+            </tree>
+        </field>
+    </record>
+
+<!--     Form View for Drivers -->
+    <record id="view_driver_form" model="ir.ui.view">
+        <field name="name">travel.driver.form</field>
+        <field name="model">travel.driver</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                        <field name="name"/>
+                        <field name="phone_no"/>
+                        <field name="aadhar_no"/>
+                        </group>
+                        <group>
+                        <field name="pan_no"/>
+                        <field name="aadhar_attachment"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

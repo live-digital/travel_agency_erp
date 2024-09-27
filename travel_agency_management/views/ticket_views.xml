@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Ticket Action -->
+
+    <record id="ticket_report_action" model="ir.actions.report">
+        <field name="name">Ticket Report</field>
+        <field name="model">travel.ticket</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">travel_agency_management.customer_booking_report</field>
+        <field name="report_file">travel_agency_management.customer_booking_report</field>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_travel_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">travel.ticket</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_ticket_form" model="ir.ui.view">
+        <field name="name">ticket.form</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Ticket">
+                <header>
+                    <!--send email button-->
+                    <button name="action_print_ticket" type="object" string="Print Report" icon="fa-print"
+                            class="oe_highlight" invisible="state != 'confirmed'"/>
+
+                    <button name="action_email" type="object" string="Send Email" class="oe_highlight"
+                            invisible="state == 'canceled'"/>
+
+                    <!-- Confirm Button: Visible only when state is 'draft' -->
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"
+                            invisible="state !='draft'"/>
+
+                    <!-- Cancel Button: Visible only when state is 'draft' -->
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state !='draft'"/>
+
+                    <!-- Draft Button: Visible only when state is 'confirmed' or 'canceled' -->
+                    <button name="action_draft" type="object" string="Draft"
+                            invisible="state not in ['confirmed', 'canceled']"/>
+
+                    <!-- State Field -->
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+
+                <sheet>
+                    <div>
+                        <!-- Ribbon for Confirmed Status -->
+                        <widget name="web_ribbon" title="Confirmed"
+                                bg_color="text-bg-success" invisible="state != 'confirmed'"/>
+                        <widget name="web_ribbon" title="Canceled"
+                                bg_color="text-bg-danger" invisible="state != 'canceled'"/>
+
+
+                    </div>
+                    <group>
+                        <group>
+                            <field name="from_city_id"/>
+                            <field name="customer_id"/>
+                            <field name="bus_id"/>
+                            <field name="boarding_time" widget="datetime" options="{'format': '%%Y-%%m-%%d %%H:%%M'}"/>
+
+                        </group>
+                        <group>
+                            <field name="to_city_id"/>
+                            <field name="departure_time" widget="datetime" options="{'format': '%%Y-%%m-%%d %%H:%%M'}"/>
+                            <field name="payment_amount"/>
+                            <field name="available_seats"/>
+                            <field name="trip_id" domain="[('from_city_id', '=', from_city_id),
+                               ('to_city_id', '=', to_city_id),
+                               ('datetime', '>', context_today())]"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ticket_tree" model="ir.ui.view">
+        <field name="name">ticket.tree</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <tree string="Ticket">
+                <field name="from_city_id"/>
+                <field name="to_city_id"/>
+                <field name="customer_id"/>
+                <field name="bus_id"/>
+                <field name="boarding_time"/>
+                <field name="departure_time"/>
+                <field name="payment_amount"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

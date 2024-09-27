@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Trip Action -->
+    <record id="action_travel_trip" model="ir.actions.act_window">
+        <field name="name">Trips</field>
+        <field name="res_model">travel.trip</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_trip_form" model="ir.ui.view">
+        <field name="name">trip.form</field>
+        <field name="model">travel.trip</field>
+        <field name="arch" type="xml">
+            <form string="Trip">
+                <sheet>
+                    <group>
+
+                        <field name="from_city_id"/>
+                        <field name="to_city_id"/>
+                       <field name="datetime" widget="datetime" options="{'format': '%%Y-%%m-%%d %%H:%%M'}"/>
+                        <field name="bus_id"/>
+                        <field name="driver_id"/>
+                        <field name="passenger_capacity" readonly="1"/>
+                        <field name="payment_amount"/>
+                       <field name="ticket_ids" readonly="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_trip_tree" model="ir.ui.view">
+        <field name="name">trip.tree</field>
+        <field name="model">travel.trip</field>
+        <field name="arch" type="xml">
+            <tree string="Trip">
+                <field name="from_city_id"/>
+                <field name="to_city_id"/>
+                <field name="datetime"/>
+                <field name="bus_id"/>
+                <field name="driver_id"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

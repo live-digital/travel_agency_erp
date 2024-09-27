@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Travel Ticket Report Template -->
+    <template id="customer_booking_report">
+        <t t-call="web.external_layout">
+            <main>
+                <div class="page">
+                    <!-- Looping through each ticket (docs) -->
+                    <t t-foreach="docs" t-as="ticket">
+                        <!-- Check if the ticket is confirmed -->
+                        <t t-if="ticket.state == 'confirmed'">
+                            <!-- Begin New Design Section -->
+                            <div style="background-color: #F55C57; padding: 20px; text-align: center; color: white;">
+                                <h1>Trip Details</h1>
+                                <h2>
+                                    <span t-esc="ticket.from_city_id.name"/>
+                                    -
+                                    <span t-esc="ticket.to_city_id.name"/>
+                                </h2>
+                                <div style="margin-top: 10px;">
+                                    <span>
+                                        <strong>Ticket Number:</strong>
+                                        <span t-esc="ticket.name"/>
+                                    </span>
+                                    |
+                                    <span>
+                                        <strong>PNR No:</strong>
+                                        <span t-esc="ticket.pnr"/>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div style="margin: 20px 0; text-align: left;">
+                                <p>Hey<span t-esc="ticket.customer_id.name"/>,
+                                </p>
+                                <p>Thank you for booking your bus ticket with us. Here are your trip details from
+                                    <strong>
+                                        <span t-esc="ticket.from_city_id.name"/>
+                                    </strong>
+                                    to
+                                    <strong>
+                                        <span t-esc="ticket.to_city_id.name"/>
+                                    </strong>
+                                    at
+                                    <strong>
+                                        <span t-esc="ticket.departure_time.strftime('%I:%M %p')"/>
+                                    </strong>
+                                    on
+                                    <strong>
+                                        <span t-esc="ticket.departure_time.strftime('%d %B %Y')"/>
+                                    </strong>
+                                    .
+                                </p>
+                            </div>
+
+                            <!-- Journey Details Section -->
+                            <!-- Journey Details Section -->
+                            <div style="background-color: #f7f7f7; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                                <h3>Journey Details</h3>
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left; padding: 8px; background-color: #ddd;">
+                                                Departure Date and Time
+                                            </th>
+                                            <th style="text-align: left; padding: 8px; background-color: #ddd;">
+                                                Arrival Date and Time
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 8px;">
+                                                <span t-esc="ticket.departure_time.strftime('%d/%m/%Y %I:%M %p')"/>
+                                            </td>
+                                            <td style="padding: 8px;">
+                                                <span t-esc="ticket.departure_time.strftime('%d/%m/%Y %I:%M %p')"/> <!-- Assuming you have arrival_time field -->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <p>
+                                    <strong>Bus:</strong>
+                                    <span t-esc="ticket.bus_id.name"/>
+                                    (A/C Seater / Sleeper (2+2))
+                                </p>
+
+                                <!-- Boarding and Dropping Points -->
+                                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left; padding: 8px; background-color: #ddd;">
+                                                Boarding Point
+                                            </th>
+                                            <th style="text-align: left; padding: 8px; background-color: #ddd;">
+                                                Dropping Point
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 8px;">
+                                                <span t-esc="ticket.from_city_id.name"/>
+                                                -
+                                                <span t-esc="ticket.to_city_id.name"/>
+                                            </td>
+                                            <td style="padding: 8px;">
+                                                <span t-esc="ticket.to_city_id.name"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <!-- Passenger Details Section -->
+                            <div style="background-color: #f7f7f7; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                                <h3>Passenger Details</h3>
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left; padding: 8px; background-color: #ddd;">
+                                                Passenger Name
+                                            </th>
+                                            <th style="text-align: left; padding: 8px; background-color: #ddd;">Seat
+                                                No
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 8px;">
+                                                <span t-esc="ticket.customer_id.name.upper()"/>
+                                                (
+                                                <span t-esc="ticket.customer_id.age"/>
+                                                Yrs,<span t-esc="ticket.customer_id.gender"/>)
+                                            </td>
+                                            <td style="padding: 8px;">
+                                                <span t-esc="ticket.seat_no"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Footer Section -->
+                            <div style="text-align: center; margin-top: 20px;">
+                                <p>Need help? <strong>Support</strong> is available 24x7 for quick resolution in
+                                    multiple languages!
+                                </p>
+                            </div>
+                            <!-- End New Design Section -->
+                        </t>
+
+                        <!-- Message for tickets that are not confirmed -->
+                        <t t-if="ticket.state != 'confirmed'">
+                            <p style="color: red;">The ticket is not confirmed yet. Please confirm the ticket to
+                                generate a valid report.
+                            </p>
+                        </t>
+                    </t>
+                </div>
+            </main>
+        </t>
+    </template>
+
+    <!-- Action to Generate the PDF Report -->
+    <record id="ticket_report_pdf" model="ir.actions.report">
+        <field name="name">Travel Ticket Report</field>
+        <field name="model">travel.ticket</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">travel_agency_management.customer_booking_report</field>
+        <field name="report_file">travel_agency_management.customer_booking_report</field>
+        <field name="print_report_name">'Travel Ticket'</field>
+        <field name="binding_model_id" ref="travel_agency_management.model_travel_ticket"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

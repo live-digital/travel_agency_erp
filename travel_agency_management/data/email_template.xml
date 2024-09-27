@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template" model="mail.template">
+        <field name="name">Ticket Confirmation Email</field>
+        <field name="model_id" ref="model_travel_ticket"/>
+        <field name="subject">Your Ticket Confirmation</field>
+        <field name="email_from">${(user.email or '')|safe}</field>
+        <field name="email_to">${object.customer_id.email|safe}</field>
+        <field name="body_html">
+            <![CDATA[
+                <p>Dear ${object.customer_id.name},</p>
+                <p>Your ticket for the bus ${object.trip_id.bus_id.name} has been confirmed.</p>
+                <p>Departure Time: ${format_datetime(object.trip_id.departure_time, tz=user.tz)}</p>
+            ]]>
+        </field>
+    </record>
+</odoo>
