@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_driver_master_form" model="ir.ui.view">
+        <field name="name">driver.master.form</field>
+        <field name="model">driver.master</field>
+        <field name="arch" type="xml">
+            <form string="Driver Master">
+                <header>
+                    <!-- Custom Save Button -->
+                    <button name="custom_save" type="object" string="Save" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="phone_no" required="1"/>
+                        <field name="aadhar_no" required="1"/>
+                        <field name="pan_no"/>
+                        <field name="aadhar_attachment" widget="binary"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_driver_master_tree" model="ir.ui.view">
+        <field name="name">driver.master.tree</field>
+        <field name="model">driver.master</field>
+        <field name="arch" type="xml">
+            <tree string="Driver Master">
+                <field name="name" optional="show"/>
+                <field name="phone_no" optional="show"/>
+                <field name="aadhar_no" optional="show"/>
+                <field name="pan_no" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Driver Master -->
+    <record id="action_driver_master" model="ir.actions.act_window">
+        <field name="name">Driver Master</field>
+        <field name="res_model">driver.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Driver Record
+            </p>
+        </field>
+    </record>
+</odoo>

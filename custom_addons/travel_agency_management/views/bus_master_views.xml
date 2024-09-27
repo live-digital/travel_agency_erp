@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_bus_master_form" model="ir.ui.view">
+        <field name="name">bus.master.form</field>
+        <field name="model">bus.master</field>
+        <field name="arch" type="xml">
+            <form string="Bus Master">
+                <!--                <header>-->
+                <!--                    &lt;!&ndash; Custom Save Button &ndash;&gt;-->
+                <!--                    <button name="custom_save" type="object" string="Save" class="oe_highlight"/>-->
+                <!--                </header>-->
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="number"/>
+                        <field name="chassis_no"/>
+                        <field name="type"/>
+                        <field name="seating_capacity"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_bus_master_tree" model="ir.ui.view">
+        <field name="name">bus.master.tree</field>
+        <field name="model">bus.master</field>
+        <field name="arch" type="xml">
+            <tree string="Bus Master">
+                <field name="name" required="1" optional="show"/>
+                <field name="number" optional="show"/>
+                <field name="type" optional="show"/>
+                <field name="seating_capacity" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Bus Master -->
+    <record id="action_bus_master" model="ir.actions.act_window">
+        <field name="name">Bus Master</field>
+        <field name="res_model">bus.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Bus Record
+            </p>
+        </field>
+    </record>
+</odoo>

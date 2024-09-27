@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_travel_ticket_form" model="ir.ui.view">
+        <field name="name">travel.ticket.form</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Ticket Details">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" invisible="state !='draft'"
+                            class="oe_highlight"/>
+<!--                   Button to print report-->
+                    <button name="action_print_ticket" type="object" string="Print Report"
+                            icon="fa-print" class="oe_highlight"
+                             invisible="state =='draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state !='confirmed'"/>
+                    <button name="action_draft" type="object" string="Draft"
+                            invisible="state in ('draft', 'confirmed')"/>
+                    <!-- Statusbar for draft, confirmed, canceled states -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"
+                           statusbar_colors="draft:grey,confirmed:blue,cancelled:red"/>
+                </header>
+
+                <sheet>
+                    <div>    <!-- Ribbon for Confirmed Status -->
+                        <widget name="web_ribbon" title="Confirmed" bg_color="text-bg-success"
+                                invisible="state != 'confirmed'"/>
+                        <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                                invisible="state != 'cancelled'"/>
+                    </div>
+                    <group>
+                        <field name="ticket_number"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="from_city" required="1"/>
+                            <field name="customer_id" required="1"/>
+                            <field name="boarding_time"/>
+                            <!--                            <field name="bus_id" required="1"/>-->
+                            <field name="payment_amount"/>
+                        </group>
+                        <group>
+                            <field name="to_city" required="1"/>
+                             <field name="trip_id" required="1"
+                                   domain="[('from_city', '=', from_city), ('to_city', '=', to_city), ('departure_time', '>', context_today())]"/>
+                            <field name="departure_time"/>
+                            <field name="available_seats"/>
+                        </group>
+                    </group>
+                </sheet>
+
+                <!-- Chatter for tracking activities -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_travel_ticket_tree" model="ir.ui.view">
+        <field name="name">travel.ticket.tree</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <tree string="Ticket Details">
+                <field name="ticket_number" optional="hide"/>
+                <field name="trip_id" optional="hide"/>
+                <field name="customer_id" optional="show"/>
+                <field name="bus_id" optional="show"/>
+                <field name="boarding_time" optional="show"/>
+                <field name="departure_time" optional="show"/>
+                <field name="payment_amount" optional="hide"/>
+                <field name="state" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Tickets -->
+    <record id="action_travel_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">travel.ticket</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Ticket Record
+            </p>
+        </field>
+    </record>
+</odoo>

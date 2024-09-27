@@ -1,0 +1,23 @@
+{
+    'name': 'Travel Agency Management',
+    'version': '1.0',
+    'author': 'Manas Ranjan Mohanta',
+    'category': 'custom',
+    'license': 'LGPL-3',
+    'depends': ['base', 'mail'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/ticket_sequence_data.xml',
+        'data/trip_sequence_data.xml',
+        'report/ticket_report.xml',
+        'views/tickets_views.xml',
+        'views/trips_views.xml',
+        'views/bus_master_views.xml',
+        'views/driver_master_views.xml',
+        'views/city_master_views.xml',
+        'views/customer_master_views.xml',
+        'views/menu_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+}

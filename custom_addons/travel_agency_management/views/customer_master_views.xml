@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_customer_master_form" model="ir.ui.view">
+        <field name="name">customer.master.form</field>
+        <field name="model">customer.master</field>
+        <field name="arch" type="xml">
+            <form string="Customer Master">
+                <header>
+                    <!-- Custom Save Button -->
+                    <button name="custom_save" type="object" string="Save" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="phone_no"/>
+                            <field name="gender"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+
+                            <field name="age"/>
+                        </group>
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_customer_master_tree" model="ir.ui.view">
+        <field name="name">customer.master.tree</field>
+        <field name="model">customer.master</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Master">
+                <field name="name" optional="show"/>
+                <field name="phone_no" optional="show"/>
+                <field name="email" optional="show"/>
+                <field name="age" optional="show"/>
+                <field name="gender" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actions for Customer Master -->
+    <record id="action_customer_master" model="ir.actions.act_window">
+        <field name="name">Customer Master</field>
+        <field name="res_model">customer.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Customer Record
+            </p>
+        </field>
+    </record>
+
+</odoo>

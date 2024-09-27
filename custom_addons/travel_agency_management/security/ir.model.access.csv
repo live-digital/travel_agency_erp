@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+travel_agency_management.access_bus_master,access_bus_master,travel_agency_management.model_bus_master,base.group_user,1,1,1,1
+travel_agency_management.access_city_master,access_city_master,travel_agency_management.model_city_master,base.group_user,1,1,1,1
+travel_agency_management.access_customer_master,access_customer_master,travel_agency_management.model_customer_master,base.group_user,1,1,1,1
+travel_agency_management.access_driver_master,access_driver_master,travel_agency_management.model_driver_master,base.group_user,1,1,1,1
+travel_agency_management.access_travel_ticket,access_travel_ticket,travel_agency_management.model_travel_ticket,base.group_user,1,1,1,1
+travel_agency_management.access_travel_trip,access_travel_trip,travel_agency_management.model_travel_trip,base.group_user,1,1,1,1

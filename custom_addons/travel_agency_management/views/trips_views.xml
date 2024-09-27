@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_travel_trip_form" model="ir.ui.view">
+        <field name="name">travel.trip.form</field>
+        <field name="model">travel.trip</field>
+        <field name="arch" type="xml">
+            <form string="Trip Details">
+                <!--                <header>-->
+                <!--                    <button name="custom_save" type="object" string="Save" class="oe_highlight"/>-->
+                <!--                </header>-->
+                <sheet>
+                    <group>
+                        <field name="trip_id" tracking="True"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="from_city" required="1"/>
+                            <field name="bus_id" required="1"/>
+                            <field name="departure_time"/>
+                            <field name="ticket_price"/>
+                        </group>
+
+                        <group>
+                            <field name="to_city" required="1"/>
+                            <field name="driver_id" required="1"/>
+                            <field name="passenger_capacity"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="ticket_ids" readonly="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_travel_trip_tree" model="ir.ui.view">
+        <field name="name">travel.trip.tree</field>
+        <field name="model">travel.trip</field>
+        <field name="arch" type="xml">
+            <tree string="Trip Details">
+                <!--                <tree string="Trip Details" create="0" delete="0" edit="0> -->
+                <!--                To remove the new button-->
+                <field name="trip_id" optional="show"/>
+                <field name="from_city" optional="show"/>
+                <field name="to_city" optional="show"/>
+                <field name="departure_time" optional="show"/>
+                <field name="bus_id" optional="show"/>
+                <field name="driver_id" optional="hide"/>
+                <field name="passenger_capacity" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Trips -->
+    <record id="action_travel_trip" model="ir.actions.act_window">
+        <field name="name">Trips</field>
+        <field name="res_model">travel.trip</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Trip Record
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_travel_management"
+              name="Travel Agency Management"
+              sequence="1"/>
+
+    <!-- Transaction Submenu -->
+    <menuitem id="menu_transaction"
+              name="Transaction"
+              parent="menu_travel_management"
+              sequence="2"/>
+    <menuitem id="menu_travel_ticket"
+              name="Tickets"
+              parent="menu_transaction"
+              action="action_travel_ticket"
+              sequence="3"/>
+    <menuitem id="menu_travel_trip"
+              name="Trips"
+              parent="menu_transaction"
+              action="action_travel_trip"
+              sequence="4"/>
+
+
+    <!-- Master Submenu -->
+    <menuitem id="menu_master"
+              name="Master"
+              parent="menu_travel_management"
+              sequence="5"/>
+    <menuitem id="menu_bus_master"
+              name="Bus"
+              parent="menu_master"
+              action="action_bus_master"
+              sequence="6"/>
+    <menuitem id="menu_city_master"
+              name="City"
+              parent="menu_master"
+              action="action_city_master"
+              sequence="7"/>
+    <menuitem id="menu_customer_master"
+              name="Customer"
+              parent="menu_master"
+              action="action_customer_master"
+              sequence="8"/>
+    <menuitem id="menu_driver_master"
+              name="Driver"
+              parent="menu_master"
+              action="action_driver_master"
+              sequence="9"/>
+
+</odoo>
+

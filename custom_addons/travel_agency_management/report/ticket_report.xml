@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <template id="ticket_report_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="ticket">
+                <div class="page"
+                     style="font-family: Arial, sans-serif; font-size: 12px; border: 2px solid #000; padding: 10px; margin: 0 auto; max-width: 800px;">
+                    <!-- Header -->
+                    <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px;">
+                        <h2 style="margin: 0; color: #00529F;">TRAVEL TICKET - BUS RESERVATION</h2>
+                        <h4>
+                            <span t-esc="ticket.from_city.name"/>
+                            -
+                            <span t-esc="ticket.to_city.name"/>
+                        </h4>
+
+                        <p style="margin: 5px 0;">Ticket No.:
+                            <strong t-field="ticket.ticket_number"/>
+                        </p>
+                    </div>
+
+                    <!-- Passenger and Journey Details -->
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+                        <tr>
+                            <td style="width: 50%; padding: 5px; border: 1px solid #000;">
+                                <strong>Passenger Name:</strong>
+                                <span t-field="ticket.customer_id.name"/>
+                            </td>
+                            <td style="width: 50%; padding: 5px; border: 1px solid #000;">
+                                <strong>Bus:</strong>
+                                <span t-field="ticket.bus_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; border: 1px solid #000;">
+                                <strong>From:</strong>
+                                <span t-field="ticket.from_city.name"/>
+                            </td>
+                            <td style="padding: 5px; border: 1px solid #000;">
+                                <strong>To:</strong>
+                                <span t-field="ticket.to_city.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; border: 1px solid #000;">
+                                <strong>Departure Time:</strong>
+                                <span t-field="ticket.departure_time"/>
+                            </td>
+                            <td style="padding: 5px; border: 1px solid #000;">
+                                <strong>Boarding Time:</strong>
+                                <span t-field="ticket.boarding_time"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; border: 1px solid #000;">
+                                <strong>Trip:</strong>
+                                <span t-field="ticket.trip_id.name"/>
+                            </td>
+                            <td style="padding: 5px; border: 1px solid #000;">
+                                <strong>Available Seats:</strong>
+                                <span t-field="ticket.available_seats"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Fare Details -->
+                    <div style="border: 1px solid #000; padding: 10px; margin-bottom: 10px;">
+                        <h3 style="margin: 0 0 10px 0; text-align: center; color: #00529F;">Fare Details</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 70%; padding: 5px; border: 1px solid #000;">
+                                    <strong>Total Fare:</strong>
+                                </td>
+                                <td style="width: 30%; padding: 5px; border: 1px solid #000; text-align: right;">
+                                    <strong>
+                                        <span t-field="ticket.payment_amount"/>
+                                        Rs
+                                    </strong>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Ticket Status -->
+                    <div style="border: 1px solid #000; padding: 10px; margin-bottom: 10px; text-align: center;">
+                        <h3 style="margin: 0 0 10px 0; color: #00529F;">Ticket Status</h3>
+                        <p style="font-size: 16px; font-weight: bold;">
+                            <t t-if="ticket.state == 'confirmed'">
+                                <span style="color: green;">CONFIRMED</span>
+                            </t>
+                            <t t-elif="ticket.state == 'draft'">
+                                <span style="color: orange;">DRAFT</span>
+                            </t>
+                            <t t-elif="ticket.state == 'cancelled'">
+                                <span style="color: red;">CANCELLED</span>
+                            </t>
+                        </p>
+                    </div>
+
+                    <!-- Important Information -->
+                    <div style="border: 1px solid #000; padding: 10px; margin-bottom: 10px;">
+                        <h3 style="margin: 0 0 10px 0; text-align: center; color: #00529F;">Important Information</h3>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>Please carry a valid photo ID proof while traveling.</li>
+                            <li>Reach the boarding point at least 15 minutes before the scheduled departure.</li>
+                            <li>This ticket is non-transferable.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="text-align: center; border-top: 2px solid #000; padding-top: 10px; font-size: 10px;">
+                        <p style="margin: 0;">This is a computer-generated ticket and does not require a signature.</p>
+                        <p style="margin: 5px 0;">Thank you for choosing our service. Have a safe journey!</p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <!--    <record id="ticket_report_pdf" model="ir.actions.report">-->
+    <!--        <field name="name">Travel Ticket Report</field>-->
+    <!--        <field name="model">travel.ticket</field>-->
+    <!--        <field name="report_type">qweb-pdf</field>-->
+    <!--        <field name="report_name">travel_agency_management.ticket_report_template</field>-->
+    <!--        <field name="report_file">travel_agency_management.ticket_report_template</field>-->
+    <!--        <field name="print_report_name">'Travel Ticket'</field>-->
+    <!--        <field name="binding_model_id" ref="model_travel_ticket"/>-->
+    <!--        <field name="binding_type">report</field>-->
+    <!--    </record>-->
+
+    <record id="ticket_report_action" model="ir.actions.report">
+        <field name="name">Ticket Report</field>
+        <field name="model">travel.ticket</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">travel_agency_management.ticket_report_template</field>
+        <field name="report_file">travel_agency_management.ticket_report_template</field>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
