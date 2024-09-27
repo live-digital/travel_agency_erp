@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from datetime import timedelta, datetime
 import logging
 
@@ -17,7 +17,7 @@ class TravelTicket(models.Model):
     from_city_id = fields.Many2one('travel.city', string="From City", required=True,
                                    default=lambda self: self.env['travel.city'].search([('name', '=', 'Bhubaneswar')],
                                                                                        limit=1))
-    to_city_id = fields.Many2one('travel.city', string="To City", required=True,  domain="[('id', '!=', from_city_id)]")
+    to_city_id = fields.Many2one('travel.city', string="To City", required=True, domain="[('id', '!=', from_city_id)]")
     customer_id = fields.Many2one('travel.customer', string="Customer", required=True)
     trip_id = fields.Many2one('travel.trip', string="Trip", required=True,
                               domain="[('departure_time', '>', datetime.now())]")
@@ -128,27 +128,84 @@ class TravelTicket(models.Model):
                 raise ValidationError("The departure city and destination city cannot be the same.")
 
     def action_send_email(self):
-        """Send confirmation email to the customer."""
-        # for ticket in self:
-        #     if ticket.state != 'confirmed':
-        #         raise ValidationError("Email can only be sent for confirmed tickets.")
-        #
-        #     # Fetch the email template
-        #     template = self.env.ref('Travel_Agency.email_template_ticket_confirmation')
-        #     if not template:
-        #         _logger.warning("Email template not found.")
-        #         return
-        #
-        #     # Prepare the email values
-        #     email_values = {
-        #         'email_to': ticket.customer_id.email,  # Customer's email
-        #         'email_from': template.email_from,
-        #         'subject': template.subject,
-        #         'body_html': template.body_html.format(
-        #             object=ticket  # Pass the ticket object to the template
-        #         ),
-        #     }
-        #
-        #     # Send the email
-        #     mail = self.env['mail.mail'].create(email_values)
-        #     mail.send()
+
+        self.ensure_one()
+
+        if self.state != 'confirmed':
+            raise UserError("You can only send email for confirmed tickets.")
+
+        template = self.env.ref('Travel_Agency.email_template_ticket_confirmation')
+
+        if not template:
+            raise UserError("Email template not found.")
+
+        if not self.customer_id.email:
+            raise UserError("Customer email is not set.")
+
+        # Render the template
+
+        template_ctx = {
+
+            'object': self,
+
+            'user': self.env.user,
+
+        }
+
+        # body = template.with_context(template_ctx)._render_field('body_html', [self.id])[self.id]
+
+        body = template.body_html
+
+        # subject = template.subject_html
+
+        body = body.replace("{{ object.customer_id.name }}", self.customer_id.name)
+
+        body = body.replace("{{ object.from_city.name }}", self.from_city_id.name)
+
+        body = body.replace("{{ object.to_city.name }}", self.to_city_id.name)
+
+        departure_time_str = self.departure_time.strftime("%Y-%m-%d %H:%M:%S")
+
+        body = body.replace("{{ object.departure_time }}", departure_time_str)
+
+        body = body.replace("{{ object.bus_id.name }}", self.bus_id.name)
+
+        subject = template.with_context(template_ctx)._render_field('subject', [self.id])[self.id]
+
+        mail_values = {
+
+            'email_from': self.env.user.email_formatted,
+
+            'email_to': self.customer_id.email,
+
+            'subject': subject,
+
+            'body_html': body,
+
+            'model': 'travel.ticket',
+
+            'res_id': self.id,
+
+        }
+
+        mail = self.env['mail.mail'].create(mail_values)
+
+        mail.send()
+
+        return {
+
+            'type': 'ir.actions.client',
+
+            'tag': 'display_notification',
+
+            'params': {
+
+                'message': 'Email sent successfully',
+
+                'type': 'success',
+
+                'sticky': False,
+
+            }
+
+        }

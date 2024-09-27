@@ -15,7 +15,7 @@
 'depends': ['base', 'mail'],
     'data': [
         'security/ir.model.access.csv',
-
+        'data/email_templates.xml',
         # Views
         'views/bus_master.xml',
         'views/city_master.xml',

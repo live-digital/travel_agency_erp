@@ -1,23 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
+    <data>
         <record id="email_template_ticket_confirmation" model="mail.template">
             <field name="name">Ticket Confirmation</field>
-            <field name="email_from">mangancharan12@gmail.com</field>
+            <field name="model_id" ref="Travel_Agency.model_travel_ticket"/>
             <field name="subject">Your Ticket Confirmation</field>
-            <field name="model_id" ref="travel_agency.model_travel_ticket"/>
-            <field name="body_html">
-                <![CDATA[
-                    <p>Dear ${object.customer_id.name},</p>
-                    <p>Your ticket from ${object.from_city_id.name} to ${object.to_city_id.name} has been confirmed.</p>
-                    <p>Trip Details:</p>
-                    <ul>
-                        <li>Departure Time: ${object.departure_time}</li>
-                        <li>Boarding Time: ${object.boarding_time}</li>
-                        <li>Payment Amount: ${object.payment_amount}</li>
-                    </ul>
-                    <p>Thank you for choosing us!</p>
-                ]]>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="email_to">{{ object.customer_id.email }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; background-color: #F1F1F1;">
+                    <table cellspacing="0" cellpadding="0"
+                           style="width:100%; margin: 0; padding: 0; background-color: #F1F1F1; border-collapse:separate;">
+                        <tr>
+                            <td align="center">
+                                <table style="background-color: #FFFFFF; width: 600px; margin: 0px auto; padding: 0px; border-spacing: 0px; border-radius: 3px; border-collapse:separate;">
+                                    <tr>
+                                        <td style="background-color: #875A7B; padding: 20px; border-top-left-radius: 3px; border-top-right-radius: 3px;">
+                                            <h2 style="margin: 0px; font-family: Arial, Helvetica, sans-serif; color: #FFFFFF; text-align: center;">
+                                                Ticket Confirmation
+                                            </h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 20px;">
+                                            <p style="margin: 0 0 15px 0; font-family: Arial, Helvetica, sans-serif;">
+                                                Dear {{ object.customer_id.name }},
+                                            </p>
+                                            <p style="margin: 0 0 15px 0; font-family: Arial, Helvetica, sans-serif;">
+                                                Your ticket has been confirmed with the following details:
+                                            </p>
+                                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                                                <tr>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd; width: 35%;">
+                                                        <strong>From:</strong>
+                                                    </td>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd;">
+                                                        {{ object.from_city.name }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd; width: 35%;">
+                                                        <strong>To:</strong>
+                                                    </td>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd;">
+                                                        {{ object.to_city.name }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd; width: 35%;">
+                                                        <strong>Departure Time:</strong>
+                                                    </td>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd;">
+                                                        {{ object.departure_time }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd; width: 35%;">
+                                                        <strong>Bus:</strong>
+                                                    </td>
+                                                    <td style="font-family: Arial, Helvetica, sans-serif; padding: 10px; border: 1px solid #ddd;">
+                                                        {{ object.bus_id.name }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <p style="margin: 0; font-family: Arial, Helvetica, sans-serif;">Thank you
+                                                for choosing our service!
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background-color: #875A7B; padding: 20px; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px;">
+                                            <p style="margin: 0; font-family: Arial, Helvetica, sans-serif; color: #FFFFFF; text-align: center;">
+
+                                                If you have any questions, please contact our support team.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </field>
         </record>
     </data>
