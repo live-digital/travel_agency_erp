@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="menu_transport_management" name="Transport Management" sequence="10"/>
+
+    <!-- Master Data Menu -->
+    <menuitem id="menu_transport_master_data" name="Master Data" parent="menu_transport_management" sequence="10"/>
+
+    <!-- Submenu: Bus -->
+    <menuitem id="menu_transport_bus" name="Buses" parent="menu_transport_master_data" action="action_bus" sequence="10"/>
+
+    <!-- Submenu: City -->
+    <menuitem id="menu_transport_city" name="City" parent="menu_transport_master_data" action="action_transport_city" sequence="20"/>
+
+    <!-- Submenu: Customer -->
+    <menuitem id="menu_transport_customer" name="Customer" parent="menu_transport_master_data" action="action_travel_customer" sequence="30"/>
+
+    <!-- Submenu: Driver -->
+    <menuitem id="menu_transport_driver" name="Driver" parent="menu_transport_master_data" action="action_travel_driver" sequence="40"/>
+
+    <!-- New Transactions Menu -->
+        <menuitem id="menu_travel_transactions" name="Transactions" parent="menu_transport_management" sequence="60"/>
+
+    <!-- Menu Item for Trips under Transactions -->
+        <menuitem id="menu_travel_trip" name="Trips" parent="menu_travel_transactions" action="action_trip" sequence="10"/>
+        <menuitem id="menu_ticket" name="Manage Tickets" parent="menu_travel_transactions" action="action_ticket" sequence="20"/>
+    <!-- Menu Item for Tickets under Transactions -->
+<!--        <menuitem id="menu_travel_ticket" name="Tickets" parent="menu_travel_transactions" action="action_travel_ticket" sequence="20"/>-->
+
+
+</odoo>

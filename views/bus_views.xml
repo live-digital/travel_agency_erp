@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id = "view_bus_form" model="ir.ui.view">
+        <field name="name">bus.form</field>
+        <field name="model">travel.bus</field>
+        <field name="arch" type="xml">
+            <form string="Bus Form">
+                <group>
+                    <field name="name" />
+                    <field name="number_plate" />
+                    <field name="bus_type"/>
+                    <field name="seating_capacity"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_bus_tree" model="ir.ui.view">
+        <field name="name">bus.tree</field>
+        <field name="model">travel.bus</field>
+        <field name="arch" type="xml">
+            <tree string="Bus List">
+                <field name="name"/>
+                <field name="number_plate"/>
+                <field name="bus_type"/>
+                <field name="seating_capacity"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_bus" model="ir.actions.act_window">
+        <field name="name">Buses</field>
+        <field name="res_model">travel.bus</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
+
+<!--    <menuitem id="menu_travel_management" name="Travel Management" sequence="10"/>-->
+<!--    <menuitem id="menu_bus" name="Buses" parent="menu_travel_management" action="action_bus"/>-->
+
+</odoo>

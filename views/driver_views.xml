@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View for Driver Model -->
+    <record id="view_driver_tree" model="ir.ui.view">
+        <field name="name">travel.driver.tree</field>
+        <field name="model">travel.driver</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="phone_no"/>
+                <field name="adhar_no"/>
+                <field name="pan_no"/>
+                <field name="bus_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Driver Model -->
+    <record id="view_driver_form" model="ir.ui.view">
+        <field name="name">travel.driver.form</field>
+        <field name="model">travel.driver</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="phone_no"/>
+                    <field name="adhar_no"/>
+                    <field name="pan_no"/>
+                    <field name="adhar_attachment" widget="binary"/>
+                    <field name="bus_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open Driver Model views -->
+    <record id="action_travel_driver" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">travel.driver</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Manage your drivers here.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item for Driver Model -->
+<!--    <menuitem id="menu_travel" name="Travel Management"/>-->
+<!--    <menuitem id="menu_travel_driver" name="Drivers" parent="travel_management_system.menu_travel" action="travel_management_system.action_travel_driver" sequence="30"/>-->
+</odoo>

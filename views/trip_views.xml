@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View for Travel Trip -->
+    <record id="view_trip_tree" model="ir.ui.view">
+        <field name="name">travel.trip.tree</field>
+        <field name="model">travel.trip</field>
+        <field name="arch" type="xml">
+            <tree string="Trip List">
+                <field name="bus_id"/>
+                <field name="from_city"/>
+                <field name="to_city"/>
+                <field name="departure_time"/>
+                <field name="arrival_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Travel Trip -->
+    <record id="view_trip_form" model="ir.ui.view">
+        <field name="name">travel.trip.form</field>
+        <field name="model">travel.trip</field>
+        <field name="arch" type="xml">
+            <form string="Trip Form">
+                <group>
+                    <field name="bus_id"/>
+                    <field name="from_city"/>
+                    <field name="to_city"/>
+                    <field name="departure_time"/>
+                    <field name="arrival_time"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Travel Trip -->
+    <record id="action_trip" model="ir.actions.act_window">
+        <field name="name">Trips</field>
+        <field name="res_model">travel.trip</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--    <menuitem id="menu_travel" name="Travel Management"/>-->
+<!--    <menuitem id="menu_travel_trip" name="Trips" parent="travel_management_system.menu_travel" action="travel_management_system.action_travel_trip" sequence="10"/>-->
+
+</odoo>

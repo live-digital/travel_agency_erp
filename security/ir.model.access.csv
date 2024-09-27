@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_travel_bus,access_travel_bus,model_travel_bus,,1,1,1,1
+access_transport_city,access_transport_city,model_transport_city,,1,1,1,1
+access_travel_driver,access_travel_driver,model_travel_driver,base.group_user,1,1,1,1
+access_travel_customer,access_travel_customer,model_travel_customer,base.group_user,1,1,1,1
+access_travel_trip,access_travel_trip,model_travel_trip,base.group_user,1,1,1,1
+access_travel_ticket,access_travel_ticket,model_travel_ticket,base.group_user,1,1,1,1
+

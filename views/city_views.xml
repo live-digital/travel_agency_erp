@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View for City Model -->
+    <record id="view_city_tree" model="ir.ui.view">
+        <field name="name">travel.city.tree</field>
+        <field name="model">transport.city</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for City Model -->
+    <record id="view_city_form" model="ir.ui.view">
+        <field name="name">travel.city.form</field>
+        <field name="model">transport.city</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open City Model views -->
+    <record id="action_transport_city" model="ir.actions.act_window">
+        <field name="name">Cities</field>
+        <field name="res_model">transport.city</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Manage your cities here.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item for City Model -->
+<!--    <menuitem id="menu_travel" name="Travel Management"/>-->
+<!--    <menuitem id="menu_transport_city" name="Cities" parent="travel_management_system.menu_travel" action="travel_management_system.action_transport_city" sequence="20"/>-->
+</odoo>

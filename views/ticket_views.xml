@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View for Travel Ticket -->
+    <record id="view_ticket_form" model="ir.ui.view">
+        <field name="name">travel.ticket.form</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Ticket Form">
+                <group>
+                    <field name="trip_id"/>
+                    <field name="bus_name" readonly="1"/>
+                    <field name="departure_time" readonly="1"/>
+                    <field name="payment_amount" readonly="1"/>
+                    <field name="status"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View for Travel Ticket -->
+    <record id="view_ticket_tree" model="ir.ui.view">
+        <field name="name">travel.ticket.tree</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <tree string="Ticket List">
+                <field name="trip_id"/>
+                <field name="bus_name"/>
+                <field name="departure_time"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action to Open Ticket Views -->
+    <record id="action_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">travel.ticket</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+<!--    <menuitem id="menu_travel" name="Travel Management" sequence="60"/>-->
+<!--    <menuitem id="menu_ticket" name="Tickets" parent="travel_management_system.menu_travel" action="travel_management_system.action_ticket" sequence="20"/>-->
+
+</odoo>
