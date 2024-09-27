@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_travel_bus_user,access.travel.bus.user,model_travel_bus,,1,0,0,0
+access_travel_driver_user,access.travel.driver.user,model_travel_driver,,1,0,0,0
+access_travel_city_user,access.travel.city.user,model_travel_city,,1,0,0,0
+access_travel_customer_user,access.travel.customer.user,model_travel_customer,,1,0,0,0
+access_travel_trip_user,access.travel.trip.user,model_travel_trip,,1,0,0,0
+access_travel_ticket_user,access.travel.ticket.user,model_travel_ticket,,1,0,0,0
+access_travel_bus_manager,access.travel.bus.manager,model_travel_bus,base.group_user,1,1,1,1
+access_travel_driver_manager,access.travel.driver.manager,model_travel_driver,base.group_user,1,1,1,1
+access_travel_city_manager,access.travel.city.manager,model_travel_city,base.group_user,1,1,1,1
+access_travel_customer_manager,access.travel.customer.manager,model_travel_customer,base.group_user,1,1,1,1
+access_travel_trip_manager,access.travel.trip.manager,model_travel_trip,base.group_user,1,1,1,1
+access_travel_ticket_manager,access.travel.ticket.manager,model_travel_ticket,base.group_user,1,1,1,1

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <template id="ticket_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="ticket">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            .ticket { width: 100%; margin: 20px auto; border: 2px solid #000; font-family: Arial,
+                            sans-serif; }
+                            .header { background-color: #Df7A64; color: white; padding: 10px; text-align: center; }
+                            .title { font-size: 24px; font-weight: bold; padding-top: 10px; }
+                            .content { padding: 20px; }
+                            table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                            .section-header { background-color: #4a90e2; color: white; font-size: 18px; font-weight:
+                            bold; padding: 10px; margin-top: 20px; }
+                            .footer { background-color: #f2f2f2; padding: 10px; text-align: center; font-size: 12px; }
+                            .important-info { font-weight: bold; color: #d9534f; }
+                            .qr-code { float: right; width: 100px; height: 100px; margin-left: 10px; }
+                        </style>
+                        <div style="background-color: #F55C57; padding: 20px; text-align: center; color: white;">
+                            <h1>Trip Details</h1>
+                            <h2>
+                                <span t-esc="ticket.from_city_id.name"/>
+                                -
+                                <span t-esc="ticket.to_city_id.name"/>
+                            </h2>
+                            <div style="margin-top: 10px;">
+                                <span>
+                                    <strong>Ticket Number:</strong>
+                                    <span t-esc="ticket.id"/>
+                                </span>
+                                |
+                                <span>
+                                    <strong>PNR No:</strong>
+                                    <span t-esc="ticket.id"/>/02101
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ticket">
+                            <div class="content">
+                                <div class="section-header">Booking Details</div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Transaction ID:</strong>
+                                            <span t-field="ticket.id"/>
+                                        </td>
+                                        <td>
+                                            <strong>Booking Date:</strong>
+                                            <span t-field="ticket.create_date"
+                                                  t-options='{"format": "dd-MM-yyyy HH:mm"}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="section-header">Travel Details</div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Bus Operator:</strong>
+                                            <span t-field="ticket.bus_id.name" t-options='{"widget": "uppercase"}'/>
+                                        </td>
+                                        <td>
+                                            <strong>Bus Type:</strong>
+                                            <span t-field="ticket.bus_id.bus_type" t-options='{"widget": "uppercase"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>From:</strong>
+                                            <span t-field="ticket.from_city_id.name"
+                                                  t-options='{"widget": "uppercase"}' class="important-info"/>
+                                        </td>
+                                        <td>
+                                            <strong>To:</strong>
+                                            <span t-field="ticket.to_city_id.name"
+                                                  t-options='{"widget": "uppercase"}' class="important-info"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Departure Date &amp; Time:</strong>
+                                            <span t-field="ticket.departure_time"
+                                                  t-options='{"format": "dd-MM-yyyy HH:mm"}'
+                                                  class="important-info"/>
+                                        </td>
+                                        <td>
+                                            <strong>Ticket Status:</strong>
+                                            <span t-field="ticket.state"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Boarding Point:</strong>
+                                            <span>Main Bus Stand</span>
+                                        </td>
+                                        <td>
+                                            <strong>Boarding Time:</strong>
+                                            <span t-field="ticket.boarding_time" t-options='{"format": "HH:mm"}'
+                                                  class="important-info"/>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="section-header">Passenger Details</div>
+                                <table>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Age</th>
+                                        <th>Mobile</th>
+                                        <th>Seat No.</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span t-field="ticket.customer_id.name"
+                                                  t-options='{"widget": "uppercase"}'/>
+                                        </td>
+                                        <td>
+                                            <span t-field="ticket.customer_id.gender"
+                                                  t-options='{"widget": "uppercase"}'/>
+                                        </td>
+                                        <td>
+                                            <span t-field="ticket.customer_id.age"
+                                                  t-options='{"widget": "uppercase"}'/>
+                                        </td>
+                                        <td>
+                                            <span t-field="ticket.customer_id.phone"
+                                                  t-options='{"widget": "uppercase"}'/>
+                                        </td>
+                                        <td>
+                                            ANY
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="section-header">Fare Details</div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <strong>Base Fare:</strong>
+                                            $
+                                            <span t-field="ticket.payment_amount"/>
+                                        </td>
+                                        <td>
+                                            <strong>Service Tax:</strong>
+                                            Included
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Total Fare:</strong>
+                                            $
+                                            <span t-field="ticket.payment_amount" class="important-info"/>
+                                        </td>
+                                        <td>
+                                            <strong>Payment Status:</strong>
+                                            CONFIRMED
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <!-- Placeholder for QR Code -->
+                                <div class="qr-code" t-att-data-qr-value="ticket.id">
+
+                                </div>
+                            </div>
+                            <div class="footer">
+                                <p>
+                                    <strong>Important:</strong>
+                                    This is a computer-generated document and does not require a signature. Please carry
+                                    a printout of this ticket and a valid photo ID proof for verification during the
+                                    journey.
+                                </p>
+                                <p>For any assistance, please contact our customer support at support@example.com or +1
+                                    (555) 123-4567.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="ticket_report_pdf" model="ir.actions.report">
+        <field name="name">Travel Ticket Report</field>
+        <field name="model">travel.ticket</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Travel_Agency.ticket_report_template</field>
+        <field name="report_file">Travel_Agency.ticket_report_template</field>
+        <field name="print_report_name">'Travel Ticket'</field>
+        <field name="binding_model_id" ref="Travel_Agency.model_travel_ticket"/>
+        <field name="binding_type">report</field>
+
+    </record>
+</odoo>

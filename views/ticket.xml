@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Ticket Form View -->
+    <record id="view_ticket_form" model="ir.ui.view">
+        <field name="name">ticket.form</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Ticket Form">
+                <header>
+
+
+                    <button name="action_confirm" type="object" string="Confirm" invisible="state !='draft'"
+                            class="oe_highlight"/>
+                    <button name="action_send_email" type="object" string="Send Email"
+
+                            invisible="state in ('draft', 'cancelled')"
+
+                            class="oe_highlight"/>
+
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state !='confirmed'"/>
+                    <button name="action_draft" type="object" string="Draft"
+                            invisible="state in ('draft', 'confirmed')"/>
+                    <!-- Statusbar for draft, confirmed, canceled states -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"
+                           statusbar_colors="draft:grey,confirmed:blue,cancelled:red"/>
+                </header>
+                <sheet>
+                    <div>    <!-- Ribbon for Confirmed Status -->
+                        <widget name="web_ribbon" title="Confirmed" bg_color="text-bg-success"
+                                invisible="state != 'confirmed'"/>
+                        <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                                invisible="state != 'cancelled'"/>
+                    </div>
+
+                    <group>
+                        <field name="from_city_id" required="1"/>
+                        <field name="to_city_id"/>
+                        <field name="customer_id" required="1"/>
+                        <field name="trip_id" required="1" domain="[('from_city_id', '=', from_city_id), ('to_city_id', '=', to_city_id), ('departure_time', '>', context_today())]"/>
+                        <field name="bus_id"/>
+                    </group>
+                    <group>
+                        <field name="boarding_time" required="1"/>
+                        <field name="departure_time" required="1"/>
+                        <field name="available_seats" required="1"/>
+                        <field name="payment_amount" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Ticket Tree View -->
+    <record id="view_ticket_tree" model="ir.ui.view">
+        <field name="name">ticket.tree</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <tree string="Ticket List">
+                <field name="from_city_id"/>
+                <field name="to_city_id"/>
+                <field name="customer_id"/>
+                <field name="trip_id"/>
+                <field name="bus_id"/>
+                <field name="boarding_time"/>
+                <field name="departure_time"/>
+                <field name="payment_amount"/>
+                <field name="available_seats"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Ticket Search View -->
+    <record id="view_ticket_search" model="ir.ui.view">
+        <field name="name">ticket.search</field>
+        <field name="model">travel.ticket</field>
+        <field name="arch" type="xml">
+            <search string="Ticket Search">
+                <field name="from_city_id"/>
+                <field name="to_city_id"/>
+                <field name="customer_id"/>
+                <field name="trip_id"/>
+                <field name="bus_id"/>
+                <field name="boarding_time"/>
+                <field name="departure_time"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Ticket Action -->
+    <record id="action_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">travel.ticket</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_ticket_tree"/>
+        <field name="search_view_id" ref="view_ticket_search"/>
+    </record>
+
+    <record id="model_travel_ticket" model="ir.model">
+    <field name="name">travel.ticket</field>
+    <field name="model">travel.ticket</field>
+    <field name="state">base</field>
+</record>
+
+    <!-- Ticket Menu Item -->
+    <!--    <menuitem id="menu_travel_ticket" name="Tickets" parent="menu_travel_root"-->
+    <!--              action="action_ticket" sequence="20"/>-->
+</odoo>

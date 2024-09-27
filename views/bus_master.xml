@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Form View for Bus -->
+    <record id="view_bus_form" model="ir.ui.view">
+        <field name="name">bus.form</field>
+        <field name="model">travel.bus</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="number_plate"/>
+                    <field name="chassis_no"/>
+                    <field name="bus_type"/>
+                    <field name="seating_capacity"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View for Bus -->
+    <record id="view_bus_tree" model="ir.ui.view">
+        <field name="name">bus.tree</field>
+        <field name="model">travel.bus</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="number_plate"/>
+                <field name="chassis_no"/>
+                <field name="bus_type"/>
+                <field name="seating_capacity"/>
+            </tree>
+        </field>
+    </record>
+     <record id="action_bus" model="ir.actions.act_window">
+        <field name="name">Buses</field>
+        <field name="res_model">travel.bus</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
