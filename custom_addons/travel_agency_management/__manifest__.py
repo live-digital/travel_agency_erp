@@ -11,6 +11,7 @@
         'data/trip_sequence_data.xml',
         'report/ticket_report.xml',
         'views/tickets_views.xml',
+        'data/mail_template_data.xml',
         'views/trips_views.xml',
         'views/bus_master_views.xml',
         'views/driver_master_views.xml',

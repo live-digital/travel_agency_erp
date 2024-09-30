@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 from datetime import timedelta, datetime
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class Ticket(models.Model):
@@ -136,3 +136,58 @@ class Ticket(models.Model):
     def action_draft(self):
         if self.state == 'cancelled':
             self.write({'state': 'draft'})
+
+    def action_send_email(self):
+        self.ensure_one()
+        if self.state != 'confirmed':
+            raise UserError("You can only send email for confirmed tickets.")
+
+        template = self.env.ref('travel_agency_management.email_template_ticket_confirmation')
+        if not template:
+            raise UserError("Email template not found.")
+
+        if not self.customer_id.email:
+            raise UserError("Customer email is not set.")
+
+        # Render the template
+        template_ctx = {
+            'object': self,
+            'user': self.env.user,
+        }
+        # body = template.with_context(template_ctx)._render_field('body_html', [self.id])[self.id]
+
+        body = template.body_html
+        # subject = template.subject_html
+        body = body.replace("{{ object.customer_id.name }}", self.customer_id.name)
+        body = body.replace("{{ object.ticket_number }}", self.ticket_number)
+        body = body.replace("{{ object.from_city.name }}", self.from_city.name)
+        body = body.replace("{{ object.to_city.name }}", self.to_city.name)
+        departure_time_str = self.departure_time.strftime("%Y-%m-%d %H:%M:%S")
+        body = body.replace("{{ object.departure_time }}", departure_time_str)
+        body = body.replace("{{ object.bus_id.name }}", self.bus_id.name)
+
+        subject = template.with_context(template_ctx)._render_field('subject', [self.id])[self.id]
+
+        mail_values = {
+            'email_from': self.env.user.email_formatted,
+            'email_to': self.customer_id.email,
+            'subject': subject,
+            'body_html': body,
+            'model': 'travel.ticket',
+            'res_id': self.id,
+        }
+
+        mail = self.env['mail.mail'].create(mail_values)
+        mail.send()
+
+        self.message_post(body="Confirmation email sent to the customer.")
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'message': 'Email sent successfully',
+                'type': 'success',
+                'sticky': False,
+            }
+        }

@@ -19,6 +19,9 @@
                     <!-- Statusbar for draft, confirmed, canceled states -->
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"
                            statusbar_colors="draft:grey,confirmed:blue,cancelled:red"/>
+
+                    <button name="action_send_email" type="object" string="Send Email"
+                            class="oe_highlight" invisible="state != 'confirmed'"/>
                 </header>
 
                 <sheet>
